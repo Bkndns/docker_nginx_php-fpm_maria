@@ -1,0 +1,14 @@
+# Docker File for Python
+
+FROM python:3-onbuild
+
+# Создать директорию
+WORKDIR /usr/src/app
+
+COPY . ./usr/src/app
+
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "./run.py"]
