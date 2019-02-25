@@ -14,7 +14,7 @@ services:
             - ./nginx/logs:/var/logs/nginx/
             - ./nginx/html:/usr/share/html/
         ports:
-            - "8080:80"
+            - "6080:80"
             - "443:443"
         links:
             - php
@@ -25,8 +25,10 @@ services:
             container_name: php-fpm
             volumes:
                 - ./nginx/www:/var/www
-            # links:
-                #   - mysql
+            ports:
+                - "9000:9000"
+            links:
+                - mariadb
     mariadb:
         image: mariadb
         environment:
@@ -35,7 +37,7 @@ services:
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         ports:
-            - "6080:80"
+            - "8080:80"
         restart: always
         environment:
             - PMA_HOST=mariadb
