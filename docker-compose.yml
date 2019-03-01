@@ -6,9 +6,10 @@ services:
     nginx:
         image: nginx:latest
         container_name: nginx
+        restart: always
         volumes:
             - ./nginx/core:/etc/nginx/conf.d
-            #- ./nginx/core:/etc/nginx/
+            # - ./nginx/core:/etc/nginx/
             # - ./nginx/core/nginx.conf:/etc/nginx/conf.d/nginx.conf
             - ./nginx/www:/var/www/
             - ./nginx/logs:/var/logs/nginx/
@@ -18,9 +19,11 @@ services:
             - "443:443"
         links:
             - php
+
     php:
         # Билдим с помощью dockerfile указав директорию где он лежит
             build: ./php
+            restart: always
             #image: php:7-fpm
             container_name: php-fpm
             volumes:
@@ -29,16 +32,23 @@ services:
                 - "9000:9000"
             links:
                 - mariadb
+
     mariadb:
         image: mariadb
+        container_name: mysql_maria
+        restart: always
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=1
             - MYSQL_ROOT_PASSWORD=
+        volumes:
+            - ./mysql:/var/lib/mysql
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        restart: always
         ports:
             - "8090:80"
-        restart: always
         environment:
             - PMA_HOST=mariadb
         links:
