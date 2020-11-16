@@ -32,9 +32,9 @@ services:
         ports:
             - "9000:9000"
         working_dir: /var/www/
-        # command: composer install
-        # links:
-        #     - mariadb
+        command: composer install
+        links:
+            - mariadb
 
     mariadb:
         image: mariadb
