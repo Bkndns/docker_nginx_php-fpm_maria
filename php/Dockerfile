@@ -1,5 +1,10 @@
 FROM php:7.4.0-fpm
 
+# Copy composer.lock and composer.json
+# COPY composer.json /var/www/
+
+WORKDIR /var/www/
+
 # RUN yum update && yum install -y \
 
 RUN apt-get update && apt-get install -y \
@@ -50,9 +55,12 @@ ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
-WORKDIR /var/www/
-
 # Change current user to www
 USER www
+
+
+# Copy composer.lock and composer.json
+# COPY composer.lock /var/www/
+# RUN composer install
 
 CMD ["php-fpm"]

@@ -17,21 +17,24 @@ services:
         ports:
             - "8080:80"
             - "443:443"
+        working_dir: /var/www/
         links:
             - php
 
     php:
         # Билдим с помощью dockerfile указав директорию где он лежит
-            build: ./php
-            restart: always
-            #image: php:7-fpm
-            container_name: php-fpm
-            volumes:
-                - ./nginx/www:/var/www
-            ports:
-                - "9000:9000"
-            links:
-                - mariadb
+        build: ./php
+        restart: always
+        #image: php:7-fpm
+        container_name: php-fpm
+        volumes:
+            - ./nginx/www:/var/www
+        ports:
+            - "9000:9000"
+        working_dir: /var/www/
+        # command: composer install
+        # links:
+        #     - mariadb
 
     mariadb:
         image: mariadb
