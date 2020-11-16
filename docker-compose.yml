@@ -32,7 +32,7 @@ services:
         ports:
             - "9000:9000"
         working_dir: /var/www/
-        command: composer install
+        # command: composer install
         links:
             - mariadb
 
